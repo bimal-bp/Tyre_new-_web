@@ -90,6 +90,11 @@
             background-color: #f8d7da;
         }
         
+        .tyre-position.blasted {
+            background-color: #ffcccc;
+            border: 2px dashed var(--secondary);
+        }
+        
         .tyre-details {
             background-color: var(--light);
             padding: 15px;
@@ -151,6 +156,15 @@
             border: 1px solid #dee2e6;
         }
         
+        .blast-controls {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff3f3;
+            border-radius: 5px;
+            border: 1px solid #ffcccc;
+        }
+        
         .position-indicator {
             font-weight: bold;
             color: var(--primary);
@@ -201,6 +215,47 @@
             margin-bottom: 15px;
             border-left: 4px solid var(--accent);
         }
+        
+        .blast-instructions {
+            background-color: #ffe7e7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .blast-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .blast-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .blast-item:last-child {
+            border-bottom: none;
+        }
+        
+        .blast-reason {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .tab-content {
+            padding: 20px 0;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -221,6 +276,7 @@
                 <a href="#"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
                 <a href="#tyre-management"><i class="fas fa-cog me-2"></i> Tyre Management</a>
                 <a href="#tyre-movement"><i class="fas fa-exchange-alt me-2"></i> Tyre Movement</a>
+                <a href="#blast-history"><i class="fas fa-history me-2"></i> Blast History</a>
                 <a href="#"><i class="fas fa-cogs me-2"></i> Settings</a>
             </div>
 
@@ -259,6 +315,43 @@
                     <div class="mt-3">
                         <button id="confirm-move" class="btn btn-success">Confirm Move</button>
                         <button id="cancel-move" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Blast Controls -->
+                <div id="blast-controls" class="blast-controls">
+                    <h5>Record Tyre Blast</h5>
+                    <div class="blast-instructions">
+                        <p><strong>Instructions:</strong> Confirm the blast details and add any additional information. This will mark the tyre as blasted and allow you to add a replacement tyre.</p>
+                    </div>
+                    <p>Blasting tyre: <span id="blast-tyre-number" class="position-indicator"></span> at position: <span id="blast-position" class="position-indicator"></span></p>
+                    <div class="mb-3">
+                        <label for="blast-date" class="form-label">Blast Date *</label>
+                        <input type="date" class="form-control" id="blast-date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="blast-reason" class="form-label">Blast Reason *</label>
+                        <select class="form-select" id="blast-reason" required>
+                            <option value="">Select reason</option>
+                            <option value="overload">Overload</option>
+                            <option value="puncture">Puncture</option>
+                            <option value="wear">Excessive Wear</option>
+                            <option value="defect">Manufacturing Defect</option>
+                            <option value="road_condition">Poor Road Condition</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="other-reason-container" style="display: none;">
+                        <label for="other-reason" class="form-label">Specify Other Reason</label>
+                        <input type="text" class="form-control" id="other-reason">
+                    </div>
+                    <div class="mb-3">
+                        <label for="blast-notes" class="form-label">Additional Notes</label>
+                        <textarea class="form-control" id="blast-notes" rows="3"></textarea>
+                    </div>
+                    <div class="mt-3">
+                        <button id="confirm-blast" class="btn btn-danger">Confirm Blast</button>
+                        <button id="cancel-blast" class="btn btn-secondary">Cancel</button>
                     </div>
                 </div>
 
@@ -341,51 +434,110 @@
                                     <h5 class="mb-0">Tyre Details</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form id="tyre-form">
-                                        <div class="mb-3">
-                                            <label for="tyreNumber" class="form-label">Tyre Number *</label>
-                                            <input type="text" class="form-control" id="tyreNumber" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="tyreBrand" class="form-label">Brand Name</label>
-                                            <input type="text" class="form-control" id="tyreBrand">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="subBrand" class="form-label">Sub Brand</label>
-                                            <input type="text" class="form-control" id="subBrand">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="initialKMR" class="form-label">Initial KMR</label>
-                                                <input type="number" class="form-control" id="initialKMR">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="initialHMR" class="form-label">Initial HMR</label>
-                                                <input type="number" class="form-control" id="initialHMR">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="dateIssued" class="form-label">Date Issued</label>
-                                            <input type="date" class="form-control" id="dateIssued">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="reason" class="form-label">Reason for Movement</label>
-                                            <select class="form-select" id="reason">
-                                                <option value="">Select reason</option>
-                                                <option value="blasting">Blasting</option>
-                                                <option value="puncture">Puncture</option>
-                                                <option value="wear">Normal Wear</option>
-                                                <option value="rotation">Scheduled Rotation</option>
-                                                <option value="other">Other</option>
-                                            </select>
+                                    <ul class="nav nav-tabs" id="tyreTabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="current-tyre-tab" data-bs-toggle="tab" data-bs-target="#current-tyre" type="button" role="tab">Current Tyre</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="new-tyre-tab" data-bs-toggle="tab" data-bs-target="#new-tyre" type="button" role="tab">New Tyre</button>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="tab-content" id="tyreTabsContent">
+                                        <!-- Current Tyre Tab -->
+                                        <div class="tab-pane fade show active" id="current-tyre" role="tabpanel">
+                                            <form id="tyre-form">
+                                                <div class="mb-3">
+                                                    <label for="tyreNumber" class="form-label">Tyre Number *</label>
+                                                    <input type="text" class="form-control" id="tyreNumber" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tyreBrand" class="form-label">Brand Name</label>
+                                                    <input type="text" class="form-control" id="tyreBrand">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="subBrand" class="form-label">Sub Brand</label>
+                                                    <input type="text" class="form-control" id="subBrand">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="initialKMR" class="form-label">Initial KMR</label>
+                                                        <input type="number" class="form-control" id="initialKMR">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="initialHMR" class="form-label">Initial HMR</label>
+                                                        <input type="number" class="form-control" id="initialHMR">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="dateIssued" class="form-label">Date Issued</label>
+                                                    <input type="date" class="form-control" id="dateIssued">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="reason" class="form-label">Reason for Movement</label>
+                                                    <select class="form-select" id="reason">
+                                                        <option value="">Select reason</option>
+                                                        <option value="blasting">Blasting</option>
+                                                        <option value="puncture">Puncture</option>
+                                                        <option value="wear">Normal Wear</option>
+                                                        <option value="rotation">Scheduled Rotation</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="action-buttons">
+                                                    <button type="submit" class="btn btn-primary">Add/Update Tyre</button>
+                                                    <button type="button" id="move-tyre-btn" class="btn btn-warning">Move This Tyre</button>
+                                                    <button type="button" id="blast-tyre-btn" class="btn btn-danger">Record Blast</button>
+                                                    <button type="button" id="clear-form-btn" class="btn btn-secondary">Clear Form</button>
+                                                </div>
+                                            </form>
                                         </div>
                                         
-                                        <div class="action-buttons">
-                                            <button type="submit" class="btn btn-primary">Add/Update Tyre</button>
-                                            <button type="button" id="move-tyre-btn" class="btn btn-warning">Move This Tyre</button>
-                                            <button type="button" id="clear-form-btn" class="btn btn-secondary">Clear Form</button>
+                                        <!-- New Tyre Tab -->
+                                        <div class="tab-pane fade" id="new-tyre" role="tabpanel">
+                                            <form id="new-tyre-form">
+                                                <div class="mb-3">
+                                                    <label for="newTyreNumber" class="form-label">New Tyre Number *</label>
+                                                    <input type="text" class="form-control" id="newTyreNumber" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="newTyreBrand" class="form-label">Brand Name *</label>
+                                                    <input type="text" class="form-control" id="newTyreBrand" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="newSubBrand" class="form-label">Sub Brand</label>
+                                                    <input type="text" class="form-control" id="newSubBrand">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="newInitialKMR" class="form-label">Initial KMR</label>
+                                                        <input type="number" class="form-control" id="newInitialKMR">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="newInitialHMR" class="form-label">Initial HMR</label>
+                                                        <input type="number" class="form-control" id="newInitialHMR">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="newDateIssued" class="form-label">Date Issued *</label>
+                                                    <input type="date" class="form-control" id="newDateIssued" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="replacingBlast" class="form-label">Replacing Blasted Tyre</label>
+                                                    <select class="form-select" id="replacingBlast">
+                                                        <option value="">Select blasted tyre (if applicable)</option>
+                                                        <!-- Options will be populated dynamically -->
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="action-buttons">
+                                                    <button type="submit" class="btn btn-success">Add New Tyre</button>
+                                                    <button type="button" id="clear-new-form-btn" class="btn btn-secondary">Clear Form</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </div>
                                     
                                     <div class="tyre-actions">
                                         <h6>Quick Actions</h6>
@@ -394,6 +546,21 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Blast History Section -->
+                <section id="blast-history" class="mt-5">
+                    <h2 class="mb-4">Blast History</h2>
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Recent Tyre Blasts</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="blast-history" id="blast-history-list">
+                                <!-- Blast history will be populated here -->
                             </div>
                         </div>
                     </div>
@@ -409,28 +576,28 @@
             function initializeTyreData() {
                 const defaultTyreData = {
                     APOQ2057: {
-                        1: { number: "V048252025", brand: "Michelin", kmr: 25400, hmr: 1850 },
-                        2: { number: "V050481425", brand: "Bridgestone", kmr: 18700, hmr: 1240 },
-                        3: { number: "D034890125", brand: "Goodyear", kmr: 32100, hmr: 2150 },
-                        4: { number: "D004700125", brand: "Apollo", kmr: 15200, hmr: 980 },
-                        5: { number: "V083972625", brand: "CEAT", kmr: 28500, hmr: 1920 },
-                        6: { number: "V065162625", brand: "MRF", kmr: 22100, hmr: 1520 },
-                        7: { number: "V063720825", brand: "JK Tyre", kmr: 19800, hmr: 1350 },
-                        8: { number: "D031140725", brand: "Bridgestone", kmr: 31400, hmr: 2080 },
-                        9: { number: "V053800825", brand: "Michelin", kmr: 26700, hmr: 1780 },
-                        10: { number: "V053750825", brand: "Goodyear", kmr: 23900, hmr: 1640 }
+                        1: { number: "V048252025", brand: "Michelin", kmr: 25400, hmr: 1850, status: "active" },
+                        2: { number: "V050481425", brand: "Bridgestone", kmr: 18700, hmr: 1240, status: "active" },
+                        3: { number: "D034890125", brand: "Goodyear", kmr: 32100, hmr: 2150, status: "active" },
+                        4: { number: "D004700125", brand: "Apollo", kmr: 15200, hmr: 980, status: "active" },
+                        5: { number: "V083972625", brand: "CEAT", kmr: 28500, hmr: 1920, status: "active" },
+                        6: { number: "V065162625", brand: "MRF", kmr: 22100, hmr: 1520, status: "active" },
+                        7: { number: "V063720825", brand: "JK Tyre", kmr: 19800, hmr: 1350, status: "active" },
+                        8: { number: "D031140725", brand: "Bridgestone", kmr: 31400, hmr: 2080, status: "active" },
+                        9: { number: "V053800825", brand: "Michelin", kmr: 26700, hmr: 1780, status: "active" },
+                        10: { number: "V053750825", brand: "Goodyear", kmr: 23900, hmr: 1640, status: "active" }
                     },
                     APOQ2058: {
-                        1: { number: "D022671725", brand: "Bridgestone", kmr: 27400, hmr: 1950 },
-                        2: { number: "T1700871925", brand: "Michelin", kmr: 19700, hmr: 1340 },
-                        3: { number: "V084282625", brand: "Goodyear", kmr: 33100, hmr: 2250 },
-                        4: { number: "V068832625", brand: "Apollo", kmr: 16200, hmr: 1080 },
-                        5: { number: "T2000892025", brand: "CEAT", kmr: 29500, hmr: 2020 },
-                        6: { number: "D014890125", brand: "MRF", kmr: 23100, hmr: 1620 },
-                        7: { number: "V058850825", brand: "JK Tyre", kmr: 20800, hmr: 1450 },
-                        8: { number: "V002902425", brand: "Bridgestone", kmr: 32400, hmr: 2180 },
-                        9: { number: "V002282425", brand: "Michelin", kmr: 27700, hmr: 1880 },
-                        10: { number: "V075202625", brand: "Goodyear", kmr: 24900, hmr: 1740 }
+                        1: { number: "D022671725", brand: "Bridgestone", kmr: 27400, hmr: 1950, status: "active" },
+                        2: { number: "T1700871925", brand: "Michelin", kmr: 19700, hmr: 1340, status: "active" },
+                        3: { number: "V084282625", brand: "Goodyear", kmr: 33100, hmr: 2250, status: "active" },
+                        4: { number: "V068832625", brand: "Apollo", kmr: 16200, hmr: 1080, status: "active" },
+                        5: { number: "T2000892025", brand: "CEAT", kmr: 29500, hmr: 2020, status: "active" },
+                        6: { number: "D014890125", brand: "MRF", kmr: 23100, hmr: 1620, status: "active" },
+                        7: { number: "V058850825", brand: "JK Tyre", kmr: 20800, hmr: 1450, status: "active" },
+                        8: { number: "V002902425", brand: "Bridgestone", kmr: 32400, hmr: 2180, status: "active" },
+                        9: { number: "V002282425", brand: "Michelin", kmr: 27700, hmr: 1880, status: "active" },
+                        10: { number: "V075202625", brand: "Goodyear", kmr: 24900, hmr: 1740, status: "active" }
                     }
                 };
                 
@@ -439,11 +606,17 @@
                     localStorage.setItem('tyreData', JSON.stringify(defaultTyreData));
                 }
                 
+                // Initialize blast history if it doesn't exist
+                if (!localStorage.getItem('blastHistory')) {
+                    localStorage.setItem('blastHistory', JSON.stringify({}));
+                }
+                
                 return JSON.parse(localStorage.getItem('tyreData'));
             }
             
             // Data structure to store tyre information
             let tyreData = initializeTyreData();
+            let blastHistory = JSON.parse(localStorage.getItem('blastHistory') || '{}');
             let currentTipper = "APOQ2057";
             let selectedPosition = null;
             let targetPosition = null;
@@ -456,6 +629,8 @@
                     this.classList.add('active');
                     currentTipper = this.getAttribute('data-tipper');
                     loadTipperData();
+                    updateBlastHistory();
+                    populateBlastDropdown();
                 });
             });
             
@@ -467,17 +642,18 @@
                     
                     // Ensure the position exists in our data structure
                     if (!tyreData[currentTipper][i]) {
-                        tyreData[currentTipper][i] = { number: "", brand: "", kmr: 0, hmr: 0 };
+                        tyreData[currentTipper][i] = { number: "", brand: "", kmr: 0, hmr: 0, status: "active" };
                     }
                     
                     if (positionElement && positionCircle) {
                         positionElement.textContent = tyreData[currentTipper][i].number;
                         
-                        // Update visual style based on whether position has a tyre
-                        if (tyreData[currentTipper][i].number) {
-                            positionCircle.classList.remove('empty');
-                        } else {
+                        // Update visual style based on tyre status
+                        positionCircle.classList.remove('empty', 'blasted');
+                        if (!tyreData[currentTipper][i].number) {
                             positionCircle.classList.add('empty');
+                        } else if (tyreData[currentTipper][i].status === "blasted") {
+                            positionCircle.classList.add('blasted');
                         }
                     }
                 }
@@ -537,6 +713,7 @@
                 selectedPosition = null;
                 targetPosition = null;
                 document.getElementById('move-controls').style.display = 'none';
+                document.getElementById('blast-controls').style.display = 'none';
             }
             
             // Move tyre button
@@ -595,6 +772,165 @@
                 targetPosition = null;
             });
             
+            // Blast tyre button
+            document.getElementById('blast-tyre-btn').addEventListener('click', function() {
+                if (!selectedPosition) {
+                    alert('Please select a tyre position first');
+                    return;
+                }
+                
+                const tyreNumber = document.getElementById('tyreNumber').value;
+                if (!tyreNumber) {
+                    alert('No tyre information available to mark as blasted');
+                    return;
+                }
+                
+                document.getElementById('blast-tyre-number').textContent = tyreNumber;
+                document.getElementById('blast-position').textContent = selectedPosition;
+                
+                // Set default blast date to today
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                document.getElementById('blast-date').value = `${yyyy}-${mm}-${dd}`;
+                
+                document.getElementById('blast-controls').style.display = 'block';
+            });
+            
+            // Show other reason field when "other" is selected
+            document.getElementById('blast-reason').addEventListener('change', function() {
+                if (this.value === 'other') {
+                    document.getElementById('other-reason-container').style.display = 'block';
+                } else {
+                    document.getElementById('other-reason-container').style.display = 'none';
+                }
+            });
+            
+            // Confirm blast button
+            document.getElementById('confirm-blast').addEventListener('click', function() {
+                const blastDate = document.getElementById('blast-date').value;
+                let blastReason = document.getElementById('blast-reason').value;
+                const blastNotes = document.getElementById('blast-notes').value;
+                
+                if (!blastDate) {
+                    alert('Please select a blast date');
+                    return;
+                }
+                
+                if (!blastReason) {
+                    alert('Please select a blast reason');
+                    return;
+                }
+                
+                // If reason is "other", use the custom reason
+                if (blastReason === 'other') {
+                    blastReason = document.getElementById('other-reason').value || 'Other';
+                }
+                
+                recordBlast(selectedPosition, blastDate, blastReason, blastNotes);
+            });
+            
+            // Record blast function
+            function recordBlast(position, date, reason, notes) {
+                const tyre = {...tyreData[currentTipper][position]};
+                
+                // Add to blast history
+                if (!blastHistory[currentTipper]) {
+                    blastHistory[currentTipper] = [];
+                }
+                
+                blastHistory[currentTipper].push({
+                    position: position,
+                    tyreNumber: tyre.number,
+                    brand: tyre.brand,
+                    date: date,
+                    reason: reason,
+                    notes: notes
+                });
+                
+                // Save blast history to localStorage
+                localStorage.setItem('blastHistory', JSON.stringify(blastHistory));
+                
+                // Mark tyre as blasted in the data
+                tyreData[currentTipper][position].status = "blasted";
+                localStorage.setItem('tyreData', JSON.stringify(tyreData));
+                
+                // Update the UI
+                document.querySelector(`[data-position="${position}"]`).classList.add('blasted');
+                
+                // Show success message
+                alert(`Tyre ${tyre.number} has been marked as blasted and added to the blast history.`);
+                
+                // Reset the form and selection
+                document.getElementById('blast-controls').style.display = 'none';
+                document.getElementById('tyre-form').reset();
+                
+                // Update blast history display
+                updateBlastHistory();
+                
+                // Update the blast dropdown for new tyres
+                populateBlastDropdown();
+            }
+            
+            // Update blast history display
+            function updateBlastHistory() {
+                const blastHistoryList = document.getElementById('blast-history-list');
+                blastHistoryList.innerHTML = '';
+                
+                if (!blastHistory[currentTipper] || blastHistory[currentTipper].length === 0) {
+                    blastHistoryList.innerHTML = '<p class="text-center">No blast history recorded</p>';
+                    return;
+                }
+                
+                // Sort blast history by date (newest first)
+                const sortedHistory = [...blastHistory[currentTipper]].sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+                
+                sortedHistory.forEach(blast => {
+                    const blastItem = document.createElement('div');
+                    blastItem.className = 'blast-item';
+                    
+                    blastItem.innerHTML = `
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <strong>${blast.tyreNumber}</strong> (Position ${blast.position})
+                                <span class="blast-reason">- ${blast.reason}</span>
+                            </div>
+                            <div>${blast.date}</div>
+                        </div>
+                        ${blast.notes ? `<div class="mt-2">Notes: ${blast.notes}</div>` : ''}
+                    `;
+                    
+                    blastHistoryList.appendChild(blastItem);
+                });
+            }
+            
+            // Populate blast dropdown for new tyre form
+            function populateBlastDropdown() {
+                const blastDropdown = document.getElementById('replacingBlast');
+                blastDropdown.innerHTML = '<option value="">Select blasted tyre (if applicable)</option>';
+                
+                if (!blastHistory[currentTipper]) return;
+                
+                // Get unique blasted tyres (to avoid duplicates if same tyre blasted multiple times)
+                const uniqueBlasts = {};
+                blastHistory[currentTipper].forEach(blast => {
+                    if (blast.tyreNumber) {
+                        uniqueBlasts[blast.tyreNumber] = blast;
+                    }
+                });
+                
+                // Add options for each blasted tyre
+                Object.values(uniqueBlasts).forEach(blast => {
+                    const option = document.createElement('option');
+                    option.value = blast.tyreNumber;
+                    option.textContent = `${blast.tyreNumber} (Position ${blast.position}, ${blast.date})`;
+                    blastDropdown.appendChild(option);
+                });
+            }
+            
             // Confirm move button
             document.getElementById('confirm-move').addEventListener('click', function() {
                 if (!targetPosition) {
@@ -608,6 +944,11 @@
             // Cancel move
             document.getElementById('cancel-move').addEventListener('click', function() {
                 clearSelection();
+            });
+            
+            // Cancel blast
+            document.getElementById('cancel-blast').addEventListener('click', function() {
+                document.getElementById('blast-controls').style.display = 'none';
             });
             
             // Move tyre function
@@ -628,8 +969,23 @@
                 document.getElementById(`position-${toPosition}-number`).textContent = fromTyre.number || '';
                 
                 // Update position styles
-                document.querySelector(`[data-position="${fromPosition}"]`).classList.toggle('empty', !toTyre.number);
-                document.querySelector(`[data-position="${toPosition}"]`).classList.toggle('empty', !fromTyre.number);
+                const fromPositionElement = document.querySelector(`[data-position="${fromPosition}"]`);
+                const toPositionElement = document.querySelector(`[data-position="${toPosition}"]`);
+                
+                fromPositionElement.classList.remove('empty', 'blasted');
+                toPositionElement.classList.remove('empty', 'blasted');
+                
+                if (!toTyre.number) {
+                    fromPositionElement.classList.add('empty');
+                } else if (toTyre.status === "blasted") {
+                    fromPositionElement.classList.add('blasted');
+                }
+                
+                if (!fromTyre.number) {
+                    toPositionElement.classList.add('empty');
+                } else if (fromTyre.status === "blasted") {
+                    toPositionElement.classList.add('blasted');
+                }
                 
                 // Reset the form and selection
                 document.getElementById('tyre-form').reset();
@@ -669,7 +1025,8 @@
                     number: tyreNumber,
                     brand: brand,
                     kmr: kmr,
-                    hmr: hmr
+                    hmr: hmr,
+                    status: "active"
                 };
                 
                 // Save to localStorage
@@ -677,14 +1034,83 @@
                 
                 // Update the UI
                 document.getElementById(`position-${selectedPosition}-number`).textContent = tyreNumber;
-                document.querySelector(`[data-position="${selectedPosition}"]`).classList.remove('empty');
+                const positionElement = document.querySelector(`[data-position="${selectedPosition}"]`);
+                positionElement.classList.remove('empty', 'blasted');
                 
                 alert('Tyre details saved successfully!');
+            });
+            
+            // New tyre form submission
+            const newTyreForm = document.getElementById('new-tyre-form');
+            newTyreForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const tyreNumber = document.getElementById('newTyreNumber').value;
+                const brand = document.getElementById('newTyreBrand').value;
+                const dateIssued = document.getElementById('newDateIssued').value;
+                const replacingBlast = document.getElementById('replacingBlast').value;
+                
+                if (!tyreNumber || !brand || !dateIssued) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // If this tyre is replacing a blast, we need to find an empty position
+                // or allow the user to select a position
+                if (replacingBlast) {
+                    // Find the blasted tyre position
+                    let blastPosition = null;
+                    for (let i = 1; i <= 10; i++) {
+                        if (tyreData[currentTipper][i] && 
+                            tyreData[currentTipper][i].number === replacingBlast && 
+                            tyreData[currentTipper][i].status === "blasted") {
+                            blastPosition = i;
+                            break;
+                        }
+                    }
+                    
+                    if (blastPosition) {
+                        // Replace the blasted tyre
+                        const kmr = parseInt(document.getElementById('newInitialKMR').value) || 0;
+                        const hmr = parseInt(document.getElementById('newInitialHMR').value) || 0;
+                        const subBrand = document.getElementById('newSubBrand').value || '';
+                        
+                        tyreData[currentTipper][blastPosition] = {
+                            number: tyreNumber,
+                            brand: brand,
+                            subBrand: subBrand,
+                            kmr: kmr,
+                            hmr: hmr,
+                            status: "active"
+                        };
+                        
+                        // Save to localStorage
+                        localStorage.setItem('tyreData', JSON.stringify(tyreData));
+                        
+                        // Update the UI
+                        document.getElementById(`position-${blastPosition}-number`).textContent = tyreNumber;
+                        document.querySelector(`[data-position="${blastPosition}"]`).classList.remove('blasted');
+                        
+                        alert(`New tyre ${tyreNumber} has been added to position ${blastPosition}, replacing the blasted tyre ${replacingBlast}`);
+                    } else {
+                        alert('Could not find the blasted tyre. Please select a position manually.');
+                    }
+                } else {
+                    alert('New tyre information saved. Please select a position to assign this tyre to.');
+                }
+                
+                // Reset the form
+                document.getElementById('new-tyre-form').reset();
             });
             
             // Clear form button
             document.getElementById('clear-form-btn').addEventListener('click', function() {
                 document.getElementById('tyre-form').reset();
+            });
+            
+            // Clear new form button
+            document.getElementById('clear-new-form-btn').addEventListener('click', function() {
+                document.getElementById('new-tyre-form').reset();
             });
             
             // Clear position button
@@ -697,7 +1123,7 @@
                 if (confirm('Are you sure you want to clear this position?')) {
                     // Clear the data model
                     if (tyreData[currentTipper] && tyreData[currentTipper][selectedPosition]) {
-                        tyreData[currentTipper][selectedPosition] = { number: "", brand: "", kmr: 0, hmr: 0 };
+                        tyreData[currentTipper][selectedPosition] = { number: "", brand: "", kmr: 0, hmr: 0, status: "active" };
                         
                         // Save to localStorage
                         localStorage.setItem('tyreData', JSON.stringify(tyreData));
@@ -705,6 +1131,7 @@
                         // Update the UI
                         document.getElementById(`position-${selectedPosition}-number`).textContent = "";
                         document.querySelector(`[data-position="${selectedPosition}"]`).classList.add('empty');
+                        document.querySelector(`[data-position="${selectedPosition}"]`).classList.remove('blasted');
                         
                         // Clear the form
                         document.getElementById('tyre-form').reset();
@@ -716,6 +1143,8 @@
             
             // Initialize with first tipper data
             loadTipperData();
+            updateBlastHistory();
+            populateBlastDropdown();
         });
     </script>
 </body>
