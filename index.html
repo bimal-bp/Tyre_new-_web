@@ -13,8 +13,6 @@
             --accent: #3498db;
             --light: #ecf0f1;
             --dark: #2c3e50;
-            --success: #27ae60;
-            --warning: #f39c12;
         }
         
         body {
@@ -32,7 +30,6 @@
             height: calc(100vh - 56px);
             position: fixed;
             padding-top: 20px;
-            overflow-y: auto;
         }
         
         .sidebar a {
@@ -136,11 +133,6 @@
             color: #721c24;
         }
         
-        .status-scrap {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        
         .tyre-icon {
             font-size: 24px;
             color: var(--primary);
@@ -182,7 +174,6 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
-            flex-wrap: wrap;
         }
         
         .axle-label {
@@ -265,165 +256,6 @@
         .nav-tabs .nav-link {
             color: var(--primary);
         }
-        
-        .dashboard-card {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .dashboard-card i {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        
-        .dashboard-card h3 {
-            font-size: 2rem;
-            margin-bottom: 0;
-        }
-        
-        .dashboard-card p {
-            color: #6c757d;
-        }
-        
-        .photo-preview {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 4px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .photo-container {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-        
-        .report-table {
-            font-size: 14px;
-        }
-        
-        .tipper-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 10px;
-            justify-items: center;
-            align-items: center;
-        }
-        
-        .position-label {
-            font-weight: bold;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 5px;
-        }
-        
-        .front-label, .back-label {
-            grid-column: 1 / span 2;
-            text-align: center;
-            font-weight: bold;
-            padding: 5px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 4px;
-        }
-        
-        .front-label {
-            grid-row: 1;
-        }
-        
-        .back-label {
-            grid-row: 5;
-        }
-        
-        .fl {
-            grid-row: 2;
-            grid-column: 1;
-        }
-        
-        .fr {
-            grid-row: 2;
-            grid-column: 2;
-        }
-        
-        .cli {
-            grid-row: 3;
-            grid-column: 1;
-        }
-        
-        .clo {
-            grid-row: 3;
-            grid-column: 2;
-        }
-        
-        .cri {
-            grid-row: 4;
-            grid-column: 1;
-        }
-        
-        .cro {
-            grid-row: 4;
-            grid-column: 2;
-        }
-        
-        .bli {
-            grid-row: 5;
-            grid-column: 1;
-        }
-        
-        .blo {
-            grid-row: 5;
-            grid-column: 2;
-        }
-        
-        .bri {
-            grid-row: 6;
-            grid-column: 1;
-        }
-        
-        .bro {
-            grid-row: 6;
-            grid-column: 2;
-        }
-        
-        .photo-upload-container {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-        
-        .photo-upload-container:hover {
-            border-color: var(--accent);
-        }
-        
-        .efficiency-badge {
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 10px;
-        }
-        
-        .efficiency-high {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .efficiency-medium {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        
-        .efficiency-low {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
     </style>
 </head>
 <body>
@@ -441,202 +273,91 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 sidebar d-none d-md-block">
-                <a href="#" data-section="dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-                <a href="#" data-section="tyre-management"><i class="fas fa-cog me-2"></i> Tyre Management</a>
-                <a href="#" data-section="tyre-movement"><i class="fas fa-exchange-alt me-2"></i> Tyre Movement</a>
-                <a href="#" data-section="blast-history"><i class="fas fa-history me-2"></i> Blast History</a>
-                <a href="#" data-section="scrap-report"><i class="fas fa-trash me-2"></i> Scrap Tyre Report</a>
-                <a href="#" data-section="efficiency-report"><i class="fas fa-chart-line me-2"></i> Efficiency Report</a>
+                <a href="#"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                <a href="#tyre-management"><i class="fas fa-cog me-2"></i> Tyre Management</a>
+                <a href="#tyre-movement"><i class="fas fa-exchange-alt me-2"></i> Tyre Movement</a>
+                <a href="#blast-history"><i class="fas fa-history me-2"></i> Blast History</a>
                 <a href="#"><i class="fas fa-cogs me-2"></i> Settings</a>
             </div>
 
             <!-- Main Content -->
             <main class="col-md-10 ms-sm-auto main-content">
-                <!-- Dashboard Section -->
-                <section id="dashboard" class="content-section">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Dashboard</h1>
-                    </div>
-                    
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Select Tipper</h5>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-outline-primary active" data-tipper="APOQ2057">APOQ2057</button>
-                                        <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2058">APOQ2058</button>
-                                        <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2059">APOQ2059</button>
-                                    </div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Tyre Management Dashboard</h1>
+                </div>
+
+                <!-- Tipper Selection -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Select Tipper</h5>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-primary active" data-tipper="APOQ2057">APOQ2057</button>
+                                    <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2058">APOQ2058</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card dashboard-card">
-                                <i class="fas fa-tire"></i>
-                                <h3 id="total-tyres">0</h3>
-                                <p>Total Tyres</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card dashboard-card">
-                                <i class="fas fa-tire-pressure-warning"></i>
-                                <h3 id="active-tyres">0</h3>
-                                <p>Active Tyres</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card dashboard-card">
-                                <i class="fas fa-ban"></i>
-                                <h3 id="blasted-tyres">0</h3>
-                                <p>Blasted Tyres</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card dashboard-card">
-                                <i class="fas fa-trash"></i>
-                                <h3 id="scrap-tyres">0</h3>
-                                <p>Scrap Tyres</p>
-                            </div>
-                        </div>
+                </div>
+
+                <!-- Move Controls -->
+                <div id="move-controls" class="move-controls">
+                    <h5>Move Tyre</h5>
+                    <div class="move-instructions">
+                        <p><strong>Instructions:</strong> Select the position where you want to move the tyre. If the target position has a tyre, they will be swapped.</p>
                     </div>
-                    
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header bg-primary text-white">
-                                    <h5 class="mb-0">Recent Tyre Movements</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Tyre</th>
-                                                    <th>From</th>
-                                                    <th>To</th>
-                                                    <th>Reason</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="recent-movements">
-                                                <!-- Will be populated by JavaScript -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header bg-danger text-white">
-                                    <h5 class="mb-0">Recent Blasts</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Tyre</th>
-                                                    <th>Position</th>
-                                                    <th>Reason</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="recent-blasts">
-                                                <!-- Will be populated by JavaScript -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <p>Moving tyre: <span id="selected-tyre-number" class="position-indicator"></span> from position: <span id="selected-position" class="position-indicator"></span></p>
+                    <p>Select target position:</p>
+                    <div class="positions-container" id="target-positions">
+                        <!-- Target positions will be populated here -->
                     </div>
-                </section>
-                
+                    <div class="mt-3">
+                        <button id="confirm-move" class="btn btn-success">Confirm Move</button>
+                        <button id="cancel-move" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Blast Controls -->
+                <div id="blast-controls" class="blast-controls">
+                    <h5>Record Tyre Blast</h5>
+                    <div class="blast-instructions">
+                        <p><strong>Instructions:</strong> Confirm the blast details and add any additional information. This will mark the tyre as blasted and allow you to add a replacement tyre.</p>
+                    </div>
+                    <p>Blasting tyre: <span id="blast-tyre-number" class="position-indicator"></span> at position: <span id="blast-position" class="position-indicator"></span></p>
+                    <div class="mb-3">
+                        <label for="blast-date" class="form-label">Blast Date *</label>
+                        <input type="date" class="form-control" id="blast-date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="blast-reason" class="form-label">Blast Reason *</label>
+                        <select class="form-select" id="blast-reason" required>
+                            <option value="">Select reason</option>
+                            <option value="overload">Overload</option>
+                            <option value="puncture">Puncture</option>
+                            <option value="wear">Excessive Wear</option>
+                            <option value="defect">Manufacturing Defect</option>
+                            <option value="road_condition">Poor Road Condition</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="other-reason-container" style="display: none;">
+                        <label for="other-reason" class="form-label">Specify Other Reason</label>
+                        <input type="text" class="form-control" id="other-reason">
+                    </div>
+                    <div class="mb-3">
+                        <label for="blast-notes" class="form-label">Additional Notes</label>
+                        <textarea class="form-control" id="blast-notes" rows="3"></textarea>
+                    </div>
+                    <div class="mt-3">
+                        <button id="confirm-blast" class="btn btn-danger">Confirm Blast</button>
+                        <button id="cancel-blast" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
                 <!-- Tyre Management Section -->
-                <section id="tyre-management" class="content-section" style="display: none;">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Tyre Management</h1>
-                    </div>
-                    
-                    <!-- Tipper Selection -->
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Select Tipper</h5>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-outline-primary active" data-tipper="APOQ2057">APOQ2057</button>
-                                        <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2058">APOQ2058</button>
-                                        <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2059">APOQ2059</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Move Controls -->
-                    <div id="move-controls" class="move-controls">
-                        <h5>Move Tyre</h5>
-                        <div class="move-instructions">
-                            <p><strong>Instructions:</strong> Select the position where you want to move the tyre. If the target position has a tyre, they will be swapped.</p>
-                        </div>
-                        <p>Moving tyre: <span id="selected-tyre-number" class="position-indicator"></span> from position: <span id="selected-position" class="position-indicator"></span></p>
-                        <p>Select target position:</p>
-                        <div class="positions-container" id="target-positions">
-                            <!-- Target positions will be populated here -->
-                        </div>
-                        <div class="mt-3">
-                            <button id="confirm-move" class="btn btn-success">Confirm Move</button>
-                            <button id="cancel-move" class="btn btn-secondary">Cancel</button>
-                        </div>
-                    </div>
-
-                    <!-- Blast Controls -->
-                    <div id="blast-controls" class="blast-controls">
-                        <h5>Record Tyre Blast</h5>
-                        <div class="blast-instructions">
-                            <p><strong>Instructions:</strong> Confirm the blast details and add any additional information. This will mark the tyre as blasted and allow you to add a replacement tyre.</p>
-                        </div>
-                        <p>Blasting tyre: <span id="blast-tyre-number" class="position-indicator"></span> at position: <span id="blast-position" class="position-indicator"></span></p>
-                        <div class="mb-3">
-                            <label for="blast-date" class="form-label">Blast Date *</label>
-                            <input type="date" class="form-control" id="blast-date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="blast-reason" class="form-label">Blast Reason *</label>
-                            <select class="form-select" id="blast-reason" required>
-                                <option value="">Select reason</option>
-                                <option value="overload">Overload</option>
-                                <option value="puncture">Puncture</option>
-                                <option value="wear">Excessive Wear</option>
-                                <option value="defect">Manufacturing Defect</option>
-                                <option value="road_condition">Poor Road Condition</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="mb-3" id="other-reason-container" style="display: none;">
-                            <label for="other-reason" class="form-label">Specify Other Reason</label>
-                            <input type="text" class="form-control" id="other-reason">
-                        </div>
-                        <div class="mb-3">
-                            <label for="blast-notes" class="form-label">Additional Notes</label>
-                            <textarea class="form-control" id="blast-notes" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="blast-photos" class="form-label">Upload Photos (Optional)</label>
-                            <input type="file" class="form-control" id="blast-photos" multiple accept="image/*">
-                            <div class="photo-container" id="blast-photo-preview"></div>
-                        </div>
-                        <div class="mt-3">
-                            <button id="confirm-blast" class="btn btn-danger">Confirm Blast</button>
-                            <button id="cancel-blast" class="btn btn-secondary">Cancel</button>
-                        </div>
-                    </div>
+                <section id="tyre-management">
+                    <h2 class="mb-4">Tyre Management</h2>
                     
                     <div class="row">
                         <!-- Tipper Diagram -->
@@ -647,84 +368,59 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="tipper-diagram text-center">
-                                        <div class="tipper-grid">
-                                            <div class="front-label">FRONT</div>
-                                            <div class="fl">
-                                                <div class="tyre-position" data-position="FL">
-                                                    <div>FL</div>
-                                                    <div class="tyre-number-display" id="position-FL-number"></div>
-                                                </div>
-                                                <div class="position-label">FR-LEFT</div>
+                                        <!-- Front Axle -->
+                                        <div class="axle-label">Front Axle</div>
+                                        <div class="d-flex justify-content-around mb-4">
+                                            <div class="tyre-position" data-position="1">
+                                                <div>1</div>
+                                                <div class="tyre-number-display" id="position-1-number"></div>
                                             </div>
-                                            <div class="fr">
-                                                <div class="tyre-position" data-position="FR">
-                                                    <div>FR</div>
-                                                    <div class="tyre-number-display" id="position-FR-number"></div>
-                                                </div>
-                                                <div class="position-label">FR-RIGHT</div>
+                                            <div class="tyre-position" data-position="2">
+                                                <div>2</div>
+                                                <div class="tyre-number-display" id="position-2-number"></div>
                                             </div>
-                                            
-                                            <div class="cli">
-                                                <div class="tyre-position" data-position="CLI">
-                                                    <div>CLI</div>
-                                                    <div class="tyre-number-display" id="position-CLI-number"></div>
-                                                </div>
-                                                <div class="position-label">Center Left In</div>
+                                        </div>
+                                        
+                                        <!-- Middle Axles -->
+                                        <div class="axle-label">Middle Axles</div>
+                                        <div class="d-flex justify-content-around mb-4">
+                                            <div class="tyre-position" data-position="3">
+                                                <div>3</div>
+                                                <div class="tyre-number-display" id="position-3-number"></div>
                                             </div>
-                                            <div class="clo">
-                                                <div class="tyre-position" data-position="CLO">
-                                                    <div>CLO</div>
-                                                    <div class="tyre-number-display" id="position-CLO-number"></div>
-                                                </div>
-                                                <div class="position-label">Center Left Out</div>
+                                            <div class="tyre-position" data-position="4">
+                                                <div>4</div>
+                                                <div class="tyre-number-display" id="position-4-number"></div>
                                             </div>
-                                            
-                                            <div class="cri">
-                                                <div class="tyre-position" data-position="CRI">
-                                                    <div>CRI</div>
-                                                    <div class="tyre-number-display" id="position-CRI-number"></div>
-                                                </div>
-                                                <div class="position-label">Center Right In</div>
+                                            <div class="tyre-position" data-position="5">
+                                                <div>5</div>
+                                                <div class="tyre-number-display" id="position-5-number"></div>
                                             </div>
-                                            <div class="cro">
-                                                <div class="tyre-position" data-position="CRO">
-                                                    <div>CRO</div>
-                                                    <div class="tyre-number-display" id="position-CRO-number"></div>
-                                                </div>
-                                                <div class="position-label">Center Right Out</div>
+                                            <div class="tyre-position" data-position="6">
+                                                <div>6</div>
+                                                <div class="tyre-number-display" id="position-6-number"></div>
                                             </div>
-                                            
-                                            <div class="bli">
-                                                <div class="tyre-position" data-position="BLI">
-                                                    <div>BLI</div>
-                                                    <div class="tyre-number-display" id="position-BLI-number"></div>
-                                                </div>
-                                                <div class="position-label">Back Left In</div>
+                                        </div>
+                                        
+                                        <!-- Rear Axle -->
+                                        <div class="axle-label">Rear Axle</div>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="tyre-position" data-position="7">
+                                                <div>7</div>
+                                                <div class="tyre-number-display" id="position-7-number"></div>
                                             </div>
-                                            <div class="blo">
-                                                <div class="tyre-position" data-position="BLO">
-                                                    <div>BLO</div>
-                                                    <div class="tyre-number-display" id="position-BLO-number"></div>
-                                                </div>
-                                                <div class="position-label">Back Left Out</div>
+                                            <div class="tyre-position" data-position="8">
+                                                <div>8</div>
+                                                <div class="tyre-number-display" id="position-8-number"></div>
                                             </div>
-                                            
-                                            <div class="bri">
-                                                <div class="tyre-position" data-position="BRI">
-                                                    <div>BRI</div>
-                                                    <div class="tyre-number-display" id="position-BRI-number"></div>
-                                                </div>
-                                                <div class="position-label">Back Right In</div>
+                                            <div class="tyre-position" data-position="9">
+                                                <div>9</div>
+                                                <div class="tyre-number-display" id="position-9-number"></div>
                                             </div>
-                                            <div class="bro">
-                                                <div class="tyre-position" data-position="BRO">
-                                                    <div>BRO</div>
-                                                    <div class="tyre-number-display" id="position-BRO-number"></div>
-                                                </div>
-                                                <div class="position-label">Back Right Out</div>
+                                            <div class="tyre-position" data-position="10">
+                                                <div>10</div>
+                                                <div class="tyre-number-display" id="position-10-number"></div>
                                             </div>
-                                            
-                                            <div class="back-label">BACK</div>
                                         </div>
                                     </div>
                                 </div>
@@ -765,12 +461,12 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="currentKMR" class="form-label">Current KMR</label>
-                                                        <input type="number" class="form-control" id="currentKMR">
+                                                        <label for="initialKMR" class="form-label">Initial KMR</label>
+                                                        <input type="number" class="form-control" id="initialKMR">
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="currentHMR" class="form-label">Current HMR</label>
-                                                        <input type="number" class="form-control" id="currentHMR">
+                                                        <label for="initialHMR" class="form-label">Initial HMR</label>
+                                                        <input type="number" class="form-control" id="initialHMR">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
@@ -790,7 +486,7 @@
                                                 </div>
                                                 
                                                 <div class="action-buttons">
-                                                    <button type="submit" class="btn btn-primary">Update Tyre</button>
+                                                    <button type="submit" class="btn btn-primary">Add/Update Tyre</button>
                                                     <button type="button" id="move-tyre-btn" class="btn btn-warning">Move This Tyre</button>
                                                     <button type="button" id="blast-tyre-btn" class="btn btn-danger">Record Blast</button>
                                                     <button type="button" id="clear-form-btn" class="btn btn-secondary">Clear Form</button>
@@ -815,12 +511,12 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="newInitialKMR" class="form-label">Initial KMR *</label>
-                                                        <input type="number" class="form-control" id="newInitialKMR" required>
+                                                        <label for="newInitialKMR" class="form-label">Initial KMR</label>
+                                                        <input type="number" class="form-control" id="newInitialKMR">
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label for="newInitialHMR" class="form-label">Initial HMR *</label>
-                                                        <input type="number" class="form-control" id="newInitialHMR" required>
+                                                        <label for="newInitialHMR" class="form-label">Initial HMR</label>
+                                                        <input type="number" class="form-control" id="newInitialHMR">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
@@ -833,15 +529,6 @@
                                                         <option value="">Select blasted tyre (if applicable)</option>
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="tyrePhotos" class="form-label">Tyre Photos</label>
-                                                    <div class="photo-upload-container" onclick="document.getElementById('tyrePhotos').click()">
-                                                        <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
-                                                        <p>Click to upload tyre photos</p>
-                                                    </div>
-                                                    <input type="file" class="d-none" id="tyrePhotos" multiple accept="image/*">
-                                                    <div class="photo-container" id="tyre-photo-preview"></div>
                                                 </div>
                                                 
                                                 <div class="action-buttons">
@@ -865,130 +552,15 @@
                 </section>
                 
                 <!-- Blast History Section -->
-                <section id="blast-history" class="content-section mt-5" style="display: none;">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Blast History</h1>
-                    </div>
-                    
-                    <!-- Tipper Selection -->
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Select Tipper</h5>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-outline-primary active" data-tipper="APOQ2057">APOQ2057</button>
-                                        <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2058">APOQ2058</button>
-                                        <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2059">APOQ2059</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                <section id="blast-history" class="mt-5">
+                    <h2 class="mb-4">Blast History</h2>
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Tyre Blast History</h5>
+                            <h5 class="mb-0">Recent Tyre Blasts</h5>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Tyre Number</th>
-                                            <th>Position</th>
-                                            <th>Brand</th>
-                                            <th>Reason</th>
-                                            <th>Final KMR</th>
-                                            <th>Final HMR</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="blast-history-table">
-                                        <!-- Will be populated by JavaScript -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Scrap Tyre Report Section -->
-                <section id="scrap-report" class="content-section mt-5" style="display: none;">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Scrap Tyre Report</h1>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Scrap Tyres</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Tyre Number</th>
-                                            <th>Brand</th>
-                                            <th>Blast Date</th>
-                                            <th>Reason</th>
-                                            <th>Final KMR</th>
-                                            <th>Final HMR</th>
-                                            <th>Total KMR</th>
-                                            <th>Total HMR</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="scrap-report-table">
-                                        <!-- Will be populated by JavaScript -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="mt-3">
-                                <button class="btn btn-success" onclick="exportToCSV('scrap-report-table', 'scrap-tyres-report')">
-                                    <i class="fas fa-download me-2"></i>Export to CSV
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Efficiency Report Section -->
-                <section id="efficiency-report" class="content-section mt-5" style="display: none;">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Tyre Efficiency Report</h1>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">Tyre Efficiency Analysis</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Tyre Number</th>
-                                            <th>Brand</th>
-                                            <th>Status</th>
-                                            <th>Initial KMR</th>
-                                            <th>Current KMR</th>
-                                            <th>KMR Run</th>
-                                            <th>Initial HMR</th>
-                                            <th>Current HMR</th>
-                                            <th>HMR Run</th>
-                                            <th>Efficiency</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="efficiency-report-table">
-                                        <!-- Will be populated by JavaScript -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="mt-3">
-                                <button class="btn btn-success" onclick="exportToCSV('efficiency-report-table', 'tyre-efficiency-report')">
-                                    <i class="fas fa-download me-2"></i>Export to CSV
-                                </button>
+                            <div class="blast-history" id="blast-history-list">
+                                <!-- Blast history will be populated here -->
                             </div>
                         </div>
                     </div>
@@ -1002,52 +574,32 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize data structure with default values
             function initializeTyreData() {
-                const positions = ['FL', 'FR', 'CLI', 'CLO', 'CRI', 'CRO', 'BLI', 'BLO', 'BRI', 'BRO'];
                 const defaultTyreData = {
-                    APOQ2057: {},
-                    APOQ2058: {},
-                    APOQ2059: {}
-                };
-                
-                // Add some default tyres for demo purposes
-                const demoData = {
                     APOQ2057: {
-                        FL: { number: "V048252025", brand: "Michelin", initialKMR: 0, currentKMR: 25400, initialHMR: 0, currentHMR: 1850, status: "active", dateIssued: "2023-01-15" },
-                        FR: { number: "V050481425", brand: "Bridgestone", initialKMR: 0, currentKMR: 18700, initialHMR: 0, currentHMR: 1240, status: "active", dateIssued: "2023-02-20" },
-                        CLI: { number: "D034890125", brand: "Goodyear", initialKMR: 0, currentKMR: 32100, initialHMR: 0, currentHMR: 2150, status: "active", dateIssued: "2023-01-10" },
-                        CLO: { number: "", brand: "", initialKMR: 0, currentKMR: 0, initialHMR: 0, currentHMR: 0, status: "active", dateIssued: "" },
-                        CRI: { number: "D004700125", brand: "Apollo", initialKMR: 0, currentKMR: 15200, initialHMR: 0, currentHMR: 980, status: "active", dateIssued: "2023-03-05" },
-                        CRO: { number: "V083972625", brand: "CEAT", initialKMR: 0, currentKMR: 28500, initialHMR: 0, currentHMR: 1920, status: "active", dateIssued: "2023-02-15" },
-                        BLI: { number: "V065162625", brand: "MRF", initialKMR: 0, currentKMR: 22100, initialHMR: 0, currentHMR: 1520, status: "active", dateIssued: "2023-01-25" },
-                        BLO: { number: "", brand: "", initialKMR: 0, currentKMR: 0, initialHMR: 0, currentHMR: 0, status: "active", dateIssued: "" },
-                        BRI: { number: "V063720825", brand: "JK Tyre", initialKMR: 0, currentKMR: 19800, initialHMR: 0, currentHMR: 1350, status: "active", dateIssued: "2023-03-12" },
-                        BRO: { number: "V053800825", brand: "Michelin", initialKMR: 0, currentKMR: 26700, initialHMR: 0, currentHMR: 1780, status: "active", dateIssued: "2023-02-28" }
+                        1: { number: "V048252025", brand: "Michelin", kmr: 25400, hmr: 1850, status: "active" },
+                        2: { number: "V050481425", brand: "Bridgestone", kmr: 18700, hmr: 1240, status: "active" },
+                        3: { number: "D034890125", brand: "Goodyear", kmr: 32100, hmr: 2150, status: "active" },
+                        4: { number: "D004700125", brand: "Apollo", kmr: 15200, hmr: 980, status: "active" },
+                        5: { number: "V083972625", brand: "CEAT", kmr: 28500, hmr: 1920, status: "active" },
+                        6: { number: "V065162625", brand: "MRF", kmr: 22100, hmr: 1520, status: "active" },
+                        7: { number: "V063720825", brand: "JK Tyre", kmr: 19800, hmr: 1350, status: "active" },
+                        8: { number: "D031140725", brand: "Bridgestone", kmr: 31400, hmr: 2080, status: "active" },
+                        9: { number: "V053800825", brand: "Michelin", kmr: 26700, hmr: 1780, status: "active" },
+                        10: { number: "V053750825", brand: "Goodyear", kmr: 23900, hmr: 1640, status: "active" }
                     },
                     APOQ2058: {
-                        FL: { number: "D022671725", brand: "Bridgestone", initialKMR: 0, currentKMR: 27400, initialHMR: 0, currentHMR: 1950, status: "active", dateIssued: "2023-01-18" },
-                        FR: { number: "T1700871925", brand: "Michelin", initialKMR: 0, currentKMR: 19700, initialHMR: 0, currentHMR: 1340, status: "active", dateIssued: "2023-02-22" },
-                        CLI: { number: "V084282625", brand: "Goodyear", initialKMR: 0, currentKMR: 33100, initialHMR: 0, currentHMR: 2250, status: "active", dateIssued: "2023-01-12" },
-                        CLO: { number: "", brand: "", initialKMR: 0, currentKMR: 0, initialHMR: 0, currentHMR: 0, status: "active", dateIssued: "" },
-                        CRI: { number: "V068832625", brand: "Apollo", initialKMR: 0, currentKMR: 16200, initialHMR: 0, currentHMR: 1080, status: "active", dateIssued: "2023-03-08" },
-                        CRO: { number: "T2000892025", brand: "CEAT", initialKMR: 0, currentKMR: 29500, initialHMR: 0, currentHMR: 2020, status: "active", dateIssued: "2023-02-18" },
-                        BLI: { number: "D014890125", brand: "MRF", initialKMR: 0, currentKMR: 23100, initialHMR: 0, currentHMR: 1620, status: "active", dateIssued: "2023-01-28" },
-                        BLO: { number: "", brand: "", initialKMR: 0, currentKMR: 0, initialHMR: 0, currentHMR: 0, status: "active", dateIssued: "" },
-                        BRI: { number: "V058850825", brand: "JK Tyre", initialKMR: 0, currentKMR: 20800, initialHMR: 0, currentHMR: 1450, status: "active", dateIssued: "2023-03-15" },
-                        BRO: { number: "V002902425", brand: "Bridgestone", initialKMR: 0, currentKMR: 32400, initialHMR: 0, currentHMR: 2180, status: "active", dateIssued: "2023-03-01" }
+                        1: { number: "D022671725", brand: "Bridgestone", kmr: 27400, hmr: 1950, status: "active" },
+                        2: { number: "T1700871925", brand: "Michelin", kmr: 19700, hmr: 1340, status: "active" },
+                        3: { number: "V084282625", brand: "Goodyear", kmr: 33100, hmr: 2250, status: "active" },
+                        4: { number: "V068832625", brand: "Apollo", kmr: 16200, hmr: 1080, status: "active" },
+                        5: { number: "T2000892025", brand: "CEAT", kmr: 29500, hmr: 2020, status: "active" },
+                        6: { number: "D014890125", brand: "MRF", kmr: 23100, hmr: 1620, status: "active" },
+                        7: { number: "V058850825", brand: "JK Tyre", kmr: 20800, hmr: 1450, status: "active" },
+                        8: { number: "V002902425", brand: "Bridgestone", kmr: 32400, hmr: 2180, status: "active" },
+                        9: { number: "V002282425", brand: "Michelin", kmr: 27700, hmr: 1880, status: "active" },
+                        10: { number: "V075202625", brand: "Goodyear", kmr: 24900, hmr: 1740, status: "active" }
                     }
                 };
-                
-                // Initialize empty positions for APOQ2059
-                positions.forEach(pos => {
-                    defaultTyreData.APOQ2059[pos] = { number: "", brand: "", initialKMR: 0, currentKMR: 0, initialHMR: 0, currentHMR: 0, status: "active", dateIssued: "" };
-                });
-                
-                // Merge demo data with default structure
-                for (const tipper in demoData) {
-                    for (const pos in demoData[tipper]) {
-                        defaultTyreData[tipper][pos] = demoData[tipper][pos];
-                    }
-                }
                 
                 // Check if data exists in localStorage, if not initialize with default values
                 if (!localStorage.getItem('tyreData')) {
@@ -1056,24 +608,7 @@
                 
                 // Initialize blast history if it doesn't exist
                 if (!localStorage.getItem('blastHistory')) {
-                    localStorage.setItem('blastHistory', JSON.stringify({
-                        APOQ2057: [
-                            { tyreNumber: "V053750825", brand: "Goodyear", position: "BRO", date: "2023-04-10", reason: "Puncture", finalKMR: 23900, finalHMR: 1640, notes: "Nail puncture beyond repair" }
-                        ],
-                        APOQ2058: [],
-                        APOQ2059: []
-                    }));
-                }
-                
-                // Initialize movement history if it doesn't exist
-                if (!localStorage.getItem('movementHistory')) {
-                    localStorage.setItem('movementHistory', JSON.stringify({
-                        APOQ2057: [
-                            { tyreNumber: "V048252025", from: "BRO", to: "FL", date: "2023-03-15", reason: "Scheduled Rotation" }
-                        ],
-                        APOQ2058: [],
-                        APOQ2059: []
-                    }));
+                    localStorage.setItem('blastHistory', JSON.stringify({}));
                 }
                 
                 return JSON.parse(localStorage.getItem('tyreData'));
@@ -1082,40 +617,9 @@
             // Data structure to store tyre information
             let tyreData = initializeTyreData();
             let blastHistory = JSON.parse(localStorage.getItem('blastHistory') || '{}');
-            let movementHistory = JSON.parse(localStorage.getItem('movementHistory') || '{}');
             let currentTipper = "APOQ2057";
             let selectedPosition = null;
             let targetPosition = null;
-            
-            // Navigation
-            const navLinks = document.querySelectorAll('.sidebar a[data-section]');
-            const contentSections = document.querySelectorAll('.content-section');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetSection = this.getAttribute('data-section');
-                    
-                    // Hide all sections
-                    contentSections.forEach(section => {
-                        section.style.display = 'none';
-                    });
-                    
-                    // Show target section
-                    document.getElementById(targetSection).style.display = 'block';
-                    
-                    // If it's a report section, update the data
-                    if (targetSection === 'blast-history') {
-                        updateBlastHistoryTable();
-                    } else if (targetSection === 'scrap-report') {
-                        updateScrapReport();
-                    } else if (targetSection === 'efficiency-report') {
-                        updateEfficiencyReport();
-                    } else if (targetSection === 'dashboard') {
-                        updateDashboard();
-                    }
-                });
-            });
             
             // Tipper selection
             const tipperButtons = document.querySelectorAll('[data-tipper]');
@@ -1127,48 +631,32 @@
                     loadTipperData();
                     updateBlastHistory();
                     populateBlastDropdown();
-                    
-                    // Update reports if they're visible
-                    if (document.getElementById('blast-history').style.display === 'block') {
-                        updateBlastHistoryTable();
-                    }
-                    if (document.getElementById('scrap-report').style.display === 'block') {
-                        updateScrapReport();
-                    }
-                    if (document.getElementById('efficiency-report').style.display === 'block') {
-                        updateEfficiencyReport();
-                    }
-                    if (document.getElementById('dashboard').style.display === 'block') {
-                        updateDashboard();
-                    }
                 });
             });
             
             // Load tipper data
             function loadTipperData() {
-                const positions = ['FL', 'FR', 'CLI', 'CLO', 'CRI', 'CRO', 'BLI', 'BLO', 'BRI', 'BRO'];
-                
-                positions.forEach(position => {
-                    const positionElement = document.getElementById(`position-${position}-number`);
-                    const positionCircle = document.querySelector(`[data-position="${position}"]`);
+                for (let i = 1; i <= 10; i++) {
+                    const positionElement = document.getElementById(`position-${i}-number`);
+                    const positionCircle = document.querySelector(`[data-position="${i}"]`);
                     
                     // Ensure the position exists in our data structure
-                    if (!tyreData[currentTipper][position]) {
-                        tyreData[currentTipper][position] = { number: "", brand: "", initialKMR: 0, currentKMR: 0, initialHMR: 0, currentHMR: 0, status: "active", dateIssued: "" };
+                    if (!tyreData[currentTipper][i]) {
+                        tyreData[currentTipper][i] = { number: "", brand: "", kmr: 0, hmr: 0, status: "active" };
                     }
                     
                     if (positionElement && positionCircle) {
-                        positionElement.textContent = tyreData[currentTipper][position].number;
+                        positionElement.textContent = tyreData[currentTipper][i].number;
                         
                         // Update visual style based on tyre status
                         positionCircle.classList.remove('empty', 'blasted');
-                        if (!tyreData[currentTipper][position].number) {
+                        if (!tyreData[currentTipper][i].number) {
                             positionCircle.classList.add('empty');
-                        } else if (tyreData[currentTipper][position].status === "blasted") {
+                        } else if (tyreData[currentTipper][i].status === "blasted") {
                             positionCircle.classList.add('blasted');
                         }
                     }
-                });
+                }
                 
                 // Save updated data to localStorage
                 localStorage.setItem('tyreData', JSON.stringify(tyreData));
@@ -1203,17 +691,17 @@
                     document.getElementById('tyreNumber').value = tyre.number || '';
                     document.getElementById('tyreBrand').value = tyre.brand || '';
                     document.getElementById('subBrand').value = '';
-                    document.getElementById('currentKMR').value = tyre.currentKMR || '';
-                    document.getElementById('currentHMR').value = tyre.currentHMR || '';
-                    document.getElementById('dateIssued').value = tyre.dateIssued || '';
+                    document.getElementById('initialKMR').value = tyre.kmr || '';
+                    document.getElementById('initialHMR').value = tyre.hmr || '';
+                    document.getElementById('dateIssued').value = '';
                     document.getElementById('reason').value = '';
                 } else {
                     // Clear form if position is empty
                     document.getElementById('tyreNumber').value = '';
                     document.getElementById('tyreBrand').value = '';
                     document.getElementById('subBrand').value = '';
-                    document.getElementById('currentKMR').value = '';
-                    document.getElementById('currentHMR').value = '';
+                    document.getElementById('initialKMR').value = '';
+                    document.getElementById('initialHMR').value = '';
                     document.getElementById('dateIssued').value = '';
                     document.getElementById('reason').value = '';
                 }
@@ -1248,18 +736,16 @@
                 const targetPositionsContainer = document.getElementById('target-positions');
                 targetPositionsContainer.innerHTML = '';
                 
-                const positions = ['FL', 'FR', 'CLI', 'CLO', 'CRI', 'CRO', 'BLI', 'BLO', 'BRI', 'BRO'];
-                
-                positions.forEach(position => {
-                    if (position != selectedPosition) {
+                for (let i = 1; i <= 10; i++) {
+                    if (i != selectedPosition) {
                         const positionOption = document.createElement('div');
                         positionOption.className = 'position-option';
-                        positionOption.textContent = `Position ${position}`;
-                        positionOption.setAttribute('data-target', position);
+                        positionOption.textContent = `Position ${i}`;
+                        positionOption.setAttribute('data-target', i);
                         
                         // Show the tyre number at the target position if it exists
-                        if (tyreData[currentTipper][position] && tyreData[currentTipper][position].number) {
-                            positionOption.textContent += ` (${tyreData[currentTipper][position].number})`;
+                        if (tyreData[currentTipper][i] && tyreData[currentTipper][i].number) {
+                            positionOption.textContent += ` (${tyreData[currentTipper][i].number})`;
                         } else {
                             positionOption.textContent += ' (Empty)';
                         }
@@ -1280,7 +766,7 @@
                         
                         targetPositionsContainer.appendChild(positionOption);
                     }
-                });
+                }
                 
                 document.getElementById('move-controls').style.display = 'block';
                 targetPosition = null;
@@ -1318,44 +804,6 @@
                     document.getElementById('other-reason-container').style.display = 'block';
                 } else {
                     document.getElementById('other-reason-container').style.display = 'none';
-                }
-            });
-            
-            // Photo preview for blast photos
-            document.getElementById('blast-photos').addEventListener('change', function(e) {
-                const previewContainer = document.getElementById('blast-photo-preview');
-                previewContainer.innerHTML = '';
-                
-                for (const file of e.target.files) {
-                    if (file.type.startsWith('image/')) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.className = 'photo-preview';
-                            previewContainer.appendChild(img);
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-            });
-            
-            // Photo preview for new tyre photos
-            document.getElementById('tyrePhotos').addEventListener('change', function(e) {
-                const previewContainer = document.getElementById('tyre-photo-preview');
-                previewContainer.innerHTML = '';
-                
-                for (const file of e.target.files) {
-                    if (file.type.startsWith('image/')) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.className = 'photo-preview';
-                            previewContainer.appendChild(img);
-                        };
-                        reader.readAsDataURL(file);
-                    }
                 }
             });
             
@@ -1398,8 +846,6 @@
                     brand: tyre.brand,
                     date: date,
                     reason: reason,
-                    finalKMR: tyre.currentKMR,
-                    finalHMR: tyre.currentHMR,
                     notes: notes
                 });
                 
@@ -1425,9 +871,6 @@
                 
                 // Update the blast dropdown for new tyres
                 populateBlastDropdown();
-                
-                // Update dashboard
-                updateDashboard();
             }
             
             // Update blast history display
@@ -1464,64 +907,6 @@
                 });
             }
             
-            // Update blast history table
-            function updateBlastHistoryTable() {
-                const tableBody = document.getElementById('blast-history-table');
-                tableBody.innerHTML = '';
-                
-                if (!blastHistory[currentTipper] || blastHistory[currentTipper].length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center">No blast history recorded</td></tr>';
-                    return;
-                }
-                
-                // Sort blast history by date (newest first)
-                const sortedHistory = [...blastHistory[currentTipper]].sort((a, b) => 
-                    new Date(b.date) - new Date(a.date)
-                );
-                
-                sortedHistory.forEach(blast => {
-                    const row = document.createElement('tr');
-                    
-                    row.innerHTML = `
-                        <td>${blast.date}</td>
-                        <td>${blast.tyreNumber}</td>
-                        <td>${blast.position}</td>
-                        <td>${blast.brand}</td>
-                        <td>${blast.reason}</td>
-                        <td>${blast.finalKMR.toLocaleString()}</td>
-                        <td>${blast.finalHMR.toLocaleString()}</td>
-                        <td>
-                            <button class="btn btn-sm btn-info view-blast-details" data-blast='${JSON.stringify(blast)}'>
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-                
-                // Add event listeners to view buttons
-                document.querySelectorAll('.view-blast-details').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const blastData = JSON.parse(this.getAttribute('data-blast'));
-                        viewBlastDetails(blastData);
-                    });
-                });
-            }
-            
-            // View blast details
-            function viewBlastDetails(blastData) {
-                // Create a modal or show details in an alert for simplicity
-                alert(`Blast Details:\n
-Tyre: ${blastData.tyreNumber}
-Position: ${blastData.position}
-Date: ${blastData.date}
-Reason: ${blastData.reason}
-Final KMR: ${blastData.finalKMR.toLocaleString()}
-Final HMR: ${blastData.finalHMR.toLocaleString()}
-Notes: ${blastData.notes || 'N/A'}`);
-            }
-            
             // Populate blast dropdown for new tyre form
             function populateBlastDropdown() {
                 const blastDropdown = document.getElementById('replacingBlast');
@@ -1553,13 +938,7 @@ Notes: ${blastData.notes || 'N/A'}`);
                     return;
                 }
                 
-                const reason = document.getElementById('reason').value;
-                if (!reason) {
-                    alert('Please select a reason for moving the tyre');
-                    return;
-                }
-                
-                moveTyre(selectedPosition, targetPosition, reason);
+                moveTyre(selectedPosition, targetPosition);
             });
             
             // Cancel move
@@ -1573,44 +952,10 @@ Notes: ${blastData.notes || 'N/A'}`);
             });
             
             // Move tyre function
-            function moveTyre(fromPosition, toPosition, reason) {
+            function moveTyre(fromPosition, toPosition) {
                 // Get the tyre data
                 const fromTyre = {...tyreData[currentTipper][fromPosition]};
                 const toTyre = {...tyreData[currentTipper][toPosition]};
-                
-                // Record movement in history
-                if (!movementHistory[currentTipper]) {
-                    movementHistory[currentTipper] = [];
-                }
-                
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                const moveDate = `${yyyy}-${mm}-${dd}`;
-                
-                if (fromTyre.number) {
-                    movementHistory[currentTipper].push({
-                        tyreNumber: fromTyre.number,
-                        from: fromPosition,
-                        to: toPosition,
-                        date: moveDate,
-                        reason: reason
-                    });
-                }
-                
-                if (toTyre.number) {
-                    movementHistory[currentTipper].push({
-                        tyreNumber: toTyre.number,
-                        from: toPosition,
-                        to: fromPosition,
-                        date: moveDate,
-                        reason: reason
-                    });
-                }
-                
-                // Save movement history
-                localStorage.setItem('movementHistory', JSON.stringify(movementHistory));
                 
                 // Swap the tyres
                 tyreData[currentTipper][fromPosition] = toTyre;
@@ -1649,12 +994,9 @@ Notes: ${blastData.notes || 'N/A'}`);
                 if (fromTyre.number) {
                     alert(`Tyre ${fromTyre.number} moved from position ${fromPosition} to position ${toPosition}`);
                 }
-                
-                // Update dashboard
-                updateDashboard();
             }
             
-            // Form submission - Update tyre
+            // Form submission - Add new tyre
             const tyreForm = document.getElementById('tyre-form');
             tyreForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -1666,9 +1008,8 @@ Notes: ${blastData.notes || 'N/A'}`);
                 
                 const tyreNumber = document.getElementById('tyreNumber').value;
                 const brand = document.getElementById('tyreBrand').value;
-                const currentKMR = parseInt(document.getElementById('currentKMR').value) || 0;
-                const currentHMR = parseInt(document.getElementById('currentHMR').value) || 0;
-                const dateIssued = document.getElementById('dateIssued').value;
+                const kmr = parseInt(document.getElementById('initialKMR').value) || 0;
+                const hmr = parseInt(document.getElementById('initialHMR').value) || 0;
                 
                 if (!tyreNumber) {
                     alert('Please enter a tyre number');
@@ -1680,19 +1021,12 @@ Notes: ${blastData.notes || 'N/A'}`);
                     tyreData[currentTipper] = {};
                 }
                 
-                // Preserve initial values if they exist
-                const initialKMR = tyreData[currentTipper][selectedPosition].initialKMR || 0;
-                const initialHMR = tyreData[currentTipper][selectedPosition].initialHMR || 0;
-                
                 tyreData[currentTipper][selectedPosition] = {
                     number: tyreNumber,
                     brand: brand,
-                    initialKMR: initialKMR,
-                    currentKMR: currentKMR,
-                    initialHMR: initialHMR,
-                    currentHMR: currentHMR,
-                    status: "active",
-                    dateIssued: dateIssued
+                    kmr: kmr,
+                    hmr: hmr,
+                    status: "active"
                 };
                 
                 // Save to localStorage
@@ -1703,10 +1037,7 @@ Notes: ${blastData.notes || 'N/A'}`);
                 const positionElement = document.querySelector(`[data-position="${selectedPosition}"]`);
                 positionElement.classList.remove('empty', 'blasted');
                 
-                alert('Tyre details updated successfully!');
-                
-                // Update dashboard
-                updateDashboard();
+                alert('Tyre details saved successfully!');
             });
             
             // New tyre form submission
@@ -1716,8 +1047,6 @@ Notes: ${blastData.notes || 'N/A'}`);
                 
                 const tyreNumber = document.getElementById('newTyreNumber').value;
                 const brand = document.getElementById('newTyreBrand').value;
-                const initialKMR = parseInt(document.getElementById('newInitialKMR').value) || 0;
-                const initialHMR = parseInt(document.getElementById('newInitialHMR').value) || 0;
                 const dateIssued = document.getElementById('newDateIssued').value;
                 const replacingBlast = document.getElementById('replacingBlast').value;
                 
@@ -1726,35 +1055,33 @@ Notes: ${blastData.notes || 'N/A'}`);
                     return;
                 }
                 
-                // If this tyre is replacing a blast, we need to find the blasted position
+                // If this tyre is replacing a blast, we need to find an empty position
+                // or allow the user to select a position
                 if (replacingBlast) {
                     // Find the blasted tyre position
                     let blastPosition = null;
-                    const positions = ['FL', 'FR', 'CLI', 'CLO', 'CRI', 'CRO', 'BLI', 'BLO', 'BRI', 'BRO'];
-                    
-                    for (const position of positions) {
-                        if (tyreData[currentTipper][position] && 
-                            tyreData[currentTipper][position].number === replacingBlast && 
-                            tyreData[currentTipper][position].status === "blasted") {
-                            blastPosition = position;
+                    for (let i = 1; i <= 10; i++) {
+                        if (tyreData[currentTipper][i] && 
+                            tyreData[currentTipper][i].number === replacingBlast && 
+                            tyreData[currentTipper][i].status === "blasted") {
+                            blastPosition = i;
                             break;
                         }
                     }
                     
                     if (blastPosition) {
                         // Replace the blasted tyre
+                        const kmr = parseInt(document.getElementById('newInitialKMR').value) || 0;
+                        const hmr = parseInt(document.getElementById('newInitialHMR').value) || 0;
                         const subBrand = document.getElementById('newSubBrand').value || '';
                         
                         tyreData[currentTipper][blastPosition] = {
                             number: tyreNumber,
                             brand: brand,
                             subBrand: subBrand,
-                            initialKMR: initialKMR,
-                            currentKMR: initialKMR,
-                            initialHMR: initialHMR,
-                            currentHMR: initialHMR,
-                            status: "active",
-                            dateIssued: dateIssued
+                            kmr: kmr,
+                            hmr: hmr,
+                            status: "active"
                         };
                         
                         // Save to localStorage
@@ -1774,10 +1101,6 @@ Notes: ${blastData.notes || 'N/A'}`);
                 
                 // Reset the form
                 document.getElementById('new-tyre-form').reset();
-                document.getElementById('tyre-photo-preview').innerHTML = '';
-                
-                // Update dashboard
-                updateDashboard();
             });
             
             // Clear form button
@@ -1788,7 +1111,6 @@ Notes: ${blastData.notes || 'N/A'}`);
             // Clear new form button
             document.getElementById('clear-new-form-btn').addEventListener('click', function() {
                 document.getElementById('new-tyre-form').reset();
-                document.getElementById('tyre-photo-preview').innerHTML = '';
             });
             
             // Clear position button
@@ -1801,16 +1123,7 @@ Notes: ${blastData.notes || 'N/A'}`);
                 if (confirm('Are you sure you want to clear this position?')) {
                     // Clear the data model
                     if (tyreData[currentTipper] && tyreData[currentTipper][selectedPosition]) {
-                        tyreData[currentTipper][selectedPosition] = { 
-                            number: "", 
-                            brand: "", 
-                            initialKMR: 0, 
-                            currentKMR: 0, 
-                            initialHMR: 0, 
-                            currentHMR: 0, 
-                            status: "active", 
-                            dateIssued: "" 
-                        };
+                        tyreData[currentTipper][selectedPosition] = { number: "", brand: "", kmr: 0, hmr: 0, status: "active" };
                         
                         // Save to localStorage
                         localStorage.setItem('tyreData', JSON.stringify(tyreData));
@@ -1824,276 +1137,14 @@ Notes: ${blastData.notes || 'N/A'}`);
                         document.getElementById('tyre-form').reset();
                         
                         alert('Position cleared successfully!');
-                        
-                        // Update dashboard
-                        updateDashboard();
                     }
                 }
             });
-            
-            // Update scrap tyre report
-            function updateScrapReport() {
-                const tableBody = document.getElementById('scrap-report-table');
-                tableBody.innerHTML = '';
-                
-                // Collect all blasted tyres from all tippers
-                let allBlastedTyres = [];
-                
-                for (const tipper in blastHistory) {
-                    if (blastHistory[tipper].length > 0) {
-                        blastHistory[tipper].forEach(blast => {
-                            allBlastedTyres.push({
-                                tipper: tipper,
-                                ...blast
-                            });
-                        });
-                    }
-                }
-                
-                if (allBlastedTyres.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="8" class="text-center">No scrap tyres recorded</td></tr>';
-                    return;
-                }
-                
-                // Sort by date (newest first)
-                allBlastedTyres.sort((a, b) => new Date(b.date) - new Date(a.date));
-                
-                allBlastedTyres.forEach(tyre => {
-                    const totalKMR = tyre.finalKMR - (tyre.initialKMR || 0);
-                    const totalHMR = tyre.finalHMR - (tyre.initialHMR || 0);
-                    
-                    const row = document.createElement('tr');
-                    
-                    row.innerHTML = `
-                        <td>${tyre.tyreNumber}</td>
-                        <td>${tyre.brand}</td>
-                        <td>${tyre.date}</td>
-                        <td>${tyre.reason}</td>
-                        <td>${tyre.finalKMR.toLocaleString()}</td>
-                        <td>${tyre.finalHMR.toLocaleString()}</td>
-                        <td>${totalKMR.toLocaleString()}</td>
-                        <td>${totalHMR.toLocaleString()}</td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-            }
-            
-            // Update efficiency report
-            function updateEfficiencyReport() {
-                const tableBody = document.getElementById('efficiency-report-table');
-                tableBody.innerHTML = '';
-                
-                // Collect all tyres from all tippers
-                let allTyres = [];
-                const positions = ['FL', 'FR', 'CLI', 'CLO', 'CRI', 'CRO', 'BLI', 'BLO', 'BRI', 'BRO'];
-                
-                for (const tipper in tyreData) {
-                    positions.forEach(position => {
-                        if (tyreData[tipper][position] && tyreData[tipper][position].number) {
-                            allTyres.push({
-                                tipper: tipper,
-                                position: position,
-                                ...tyreData[tipper][position]
-                            });
-                        }
-                    });
-                }
-                
-                if (allTyres.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="10" class="text-center">No tyre data available</td></tr>';
-                    return;
-                }
-                
-                allTyres.forEach(tyre => {
-                    const kmrRun = tyre.currentKMR - tyre.initialKMR;
-                    const hmrRun = tyre.currentHMR - tyre.initialHMR;
-                    
-                    // Calculate efficiency (simple ratio for demo purposes)
-                    let efficiency = 'N/A';
-                    let efficiencyClass = '';
-                    
-                    if (tyre.status === 'active') {
-                        if (hmrRun > 0) {
-                            const efficiencyRatio = kmrRun / hmrRun;
-                            
-                            if (efficiencyRatio > 15) {
-                                efficiency = 'High';
-                                efficiencyClass = 'efficiency-high';
-                            } else if (efficiencyRatio > 10) {
-                                efficiency = 'Medium';
-                                efficiencyClass = 'efficiency-medium';
-                            } else {
-                                efficiency = 'Low';
-                                efficiencyClass = 'efficiency-low';
-                            }
-                            
-                            efficiency += ` (${efficiencyRatio.toFixed(1)} km/hm)`;
-                        }
-                    } else {
-                        efficiency = 'Blasted';
-                    }
-                    
-                    const row = document.createElement('tr');
-                    
-                    row.innerHTML = `
-                        <td>${tyre.number}</td>
-                        <td>${tyre.brand}</td>
-                        <td><span class="tyre-status ${tyre.status === 'active' ? 'status-active' : 'status-inactive'}">${tyre.status}</span></td>
-                        <td>${tyre.initialKMR.toLocaleString()}</td>
-                        <td>${tyre.currentKMR.toLocaleString()}</td>
-                        <td>${kmrRun.toLocaleString()}</td>
-                        <td>${tyre.initialHMR.toLocaleString()}</td>
-                        <td>${tyre.currentHMR.toLocaleString()}</td>
-                        <td>${hmrRun.toLocaleString()}</td>
-                        <td><span class="efficiency-badge ${efficiencyClass}">${efficiency}</span></td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
-            }
-            
-            // Update dashboard
-            function updateDashboard() {
-                // Count tyres
-                let totalTyres = 0;
-                let activeTyres = 0;
-                let blastedTyres = 0;
-                let scrapTyres = 0;
-                
-                const positions = ['FL', 'FR', 'CLI', 'CLO', 'CRI', 'CRO', 'BLI', 'BLO', 'BRI', 'BRO'];
-                
-                // Count current tipper tyres
-                for (const tipper in tyreData) {
-                    positions.forEach(position => {
-                        if (tyreData[tipper][position] && tyreData[tipper][position].number) {
-                            totalTyres++;
-                            
-                            if (tyreData[tipper][position].status === 'active') {
-                                activeTyres++;
-                            } else {
-                                blastedTyres++;
-                            }
-                        }
-                    });
-                }
-                
-                // Count scrap tyres from blast history
-                for (const tipper in blastHistory) {
-                    scrapTyres += blastHistory[tipper].length;
-                }
-                
-                // Update dashboard numbers
-                document.getElementById('total-tyres').textContent = totalTyres;
-                document.getElementById('active-tyres').textContent = activeTyres;
-                document.getElementById('blasted-tyres').textContent = blastedTyres;
-                document.getElementById('scrap-tyres').textContent = scrapTyres;
-                
-                // Update recent movements
-                const recentMovements = document.getElementById('recent-movements');
-                recentMovements.innerHTML = '';
-                
-                let allMovements = [];
-                for (const tipper in movementHistory) {
-                    movementHistory[tipper].forEach(movement => {
-                        allMovements.push({
-                            tipper: tipper,
-                            ...movement
-                        });
-                    });
-                }
-                
-                // Sort by date (newest first) and take top 5
-                allMovements.sort((a, b) => new Date(b.date) - new Date(a.date));
-                const recentMovementsList = allMovements.slice(0, 5);
-                
-                if (recentMovementsList.length === 0) {
-                    recentMovements.innerHTML = '<tr><td colspan="5" class="text-center">No recent movements</td></tr>';
-                } else {
-                    recentMovementsList.forEach(movement => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${movement.date}</td>
-                            <td>${movement.tyreNumber}</td>
-                            <td>${movement.from}</td>
-                            <td>${movement.to}</td>
-                            <td>${movement.reason}</td>
-                        `;
-                        recentMovements.appendChild(row);
-                    });
-                }
-                
-                // Update recent blasts
-                const recentBlasts = document.getElementById('recent-blasts');
-                recentBlasts.innerHTML = '';
-                
-                let allBlasts = [];
-                for (const tipper in blastHistory) {
-                    blastHistory[tipper].forEach(blast => {
-                        allBlasts.push({
-                            tipper: tipper,
-                            ...blast
-                        });
-                    });
-                }
-                
-                // Sort by date (newest first) and take top 5
-                allBlasts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                const recentBlastsList = allBlasts.slice(0, 5);
-                
-                if (recentBlastsList.length === 0) {
-                    recentBlasts.innerHTML = '<tr><td colspan="4" class="text-center">No recent blasts</td></tr>';
-                } else {
-                    recentBlastsList.forEach(blast => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${blast.date}</td>
-                            <td>${blast.tyreNumber}</td>
-                            <td>${blast.position}</td>
-                            <td>${blast.reason}</td>
-                        `;
-                        recentBlasts.appendChild(row);
-                    });
-                }
-            }
-            
-            // Export to CSV function
-            window.exportToCSV = function(tableId, filename) {
-                const table = document.getElementById(tableId);
-                let csv = [];
-                
-                // Get headers
-                const headers = [];
-                for (let i = 0; i < table.rows[0].cells.length; i++) {
-                    headers.push(table.rows[0].cells[i].textContent);
-                }
-                csv.push(headers.join(','));
-                
-                // Get rows
-                for (let i = 1; i < table.rows.length; i++) {
-                    const row = [];
-                    for (let j = 0; j < table.rows[i].cells.length; j++) {
-                        row.push('"' + table.rows[i].cells[j].textContent.replace(/"/g, '""') + '"');
-                    }
-                    csv.push(row.join(','));
-                }
-                
-                // Create download link
-                const csvString = csv.join('\n');
-                const link = document.createElement('a');
-                link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
-                link.download = filename + '.csv';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            };
             
             // Initialize with first tipper data
             loadTipperData();
             updateBlastHistory();
             populateBlastDropdown();
-            updateDashboard();
         });
     </script>
 </body>
