@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyre Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+        }
+        
+        .sidebar {
+            background-color: var(--dark);
+            color: white;
+            height: calc(100vh - 56px);
+            position: fixed;
+            padding-top: 20px;
+        }
+        
+        .sidebar a {
+            color: white;
+            padding: 15px 20px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar a:hover {
+            background-color: var(--accent);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .tyre-position {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light);
+            border: 2px solid var(--primary);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tyre-position:hover {
+            transform: scale(1.05);
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .tyre-position.selected {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .tyre-position.empty {
+            background-color: #f8d7da;
+        }
+        
+        .tyre-details {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+        }
+        
+        .tipper-diagram {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .tyre-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .tyre-icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .tyre-number-display {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 5px;
+        }
+        
+        .move-controls {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .position-indicator {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .axle-label {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .tyre-actions {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .position-option {
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .position-option:hover {
+            background-color: #dee2e6;
+        }
+        
+        .positions-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .move-instructions {
+            background-color: #e7f5ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-truck-moving me-2"></i>
+                Tyre Management System
+            </a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar d-none d-md-block">
+                <a href="#"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                <a href="#tyre-management"><i class="fas fa-cog me-2"></i> Tyre Management</a>
+                <a href="#tyre-movement"><i class="fas fa-exchange-alt me-2"></i> Tyre Movement</a>
+                <a href="#"><i class="fas fa-cogs me-2"></i> Settings</a>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-10 ms-sm-auto main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Tyre Management Dashboard</h1>
+                </div>
+
+                <!-- Tipper Selection -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Select Tipper</h5>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-primary active" data-tipper="APOQ2057">APOQ2057</button>
+                                    <button type="button" class="btn btn-outline-primary" data-tipper="APOQ2058">APOQ2058</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Move Controls -->
+                <div id="move-controls" class="move-controls">
+                    <h5>Move Tyre</h5>
+                    <div class="move-instructions">
+                        <p><strong>Instructions:</strong> Select the position where you want to move the tyre. If the target position has a tyre, they will be swapped.</p>
+                    </div>
+                    <p>Moving tyre: <span id="selected-tyre-number" class="position-indicator"></span> from position: <span id="selected-position" class="position-indicator"></span></p>
+                    <p>Select target position:</p>
+                    <div class="positions-container" id="target-positions">
+                        <!-- Target positions will be populated here -->
+                    </div>
+                    <div class="mt-3">
+                        <button id="confirm-move" class="btn btn-success">Confirm Move</button>
+                        <button id="cancel-move" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Tyre Management Section -->
+                <section id="tyre-management">
+                    <h2 class="mb-4">Tyre Management</h2>
+                    
+                    <div class="row">
+                        <!-- Tipper Diagram -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Tipper Tyre Positions</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tipper-diagram text-center">
+                                        <!-- Front Axle -->
+                                        <div class="axle-label">Front Axle</div>
+                                        <div class="d-flex justify-content-around mb-4">
+                                            <div class="tyre-position" data-position="1">
+                                                <div>1</div>
+                                                <div class="tyre-number-display" id="position-1-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="2">
+                                                <div>2</div>
+                                                <div class="tyre-number-display" id="position-2-number"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Middle Axles -->
+                                        <div class="axle-label">Middle Axles</div>
+                                        <div class="d-flex justify-content-around mb-4">
+                                            <div class="tyre-position" data-position="3">
+                                                <div>3</div>
+                                                <div class="tyre-number-display" id="position-3-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="4">
+                                                <div>4</div>
+                                                <div class="tyre-number-display" id="position-4-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="5">
+                                                <div>5</div>
+                                                <div class="tyre-number-display" id="position-5-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="6">
+                                                <div>6</div>
+                                                <div class="tyre-number-display" id="position-6-number"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Rear Axle -->
+                                        <div class="axle-label">Rear Axle</div>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="tyre-position" data-position="7">
+                                                <div>7</div>
+                                                <div class="tyre-number-display" id="position-7-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="8">
+                                                <div>8</div>
+                                                <div class="tyre-number-display" id="position-8-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="9">
+                                                <div>9</div>
+                                                <div class="tyre-number-display" id="position-9-number"></div>
+                                            </div>
+                                            <div class="tyre-position" data-position="10">
+                                                <div>10</div>
+                                                <div class="tyre-number-display" id="position-10-number"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tyre Details Form -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Tyre Details</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="tyre-form">
+                                        <div class="mb-3">
+                                            <label for="tyreNumber" class="form-label">Tyre Number *</label>
+                                            <input type="text" class="form-control" id="tyreNumber" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tyreBrand" class="form-label">Brand Name</label>
+                                            <input type="text" class="form-control" id="tyreBrand">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="subBrand" class="form-label">Sub Brand</label>
+                                            <input type="text" class="form-control" id="subBrand">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="initialKMR" class="form-label">Initial KMR</label>
+                                                <input type="number" class="form-control" id="initialKMR">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="initialHMR" class="form-label">Initial HMR</label>
+                                                <input type="number" class="form-control" id="initialHMR">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="dateIssued" class="form-label">Date Issued</label>
+                                            <input type="date" class="form-control" id="dateIssued">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="reason" class="form-label">Reason for Movement</label>
+                                            <select class="form-select" id="reason">
+                                                <option value="">Select reason</option>
+                                                <option value="blasting">Blasting</option>
+                                                <option value="puncture">Puncture</option>
+                                                <option value="wear">Normal Wear</option>
+                                                <option value="rotation">Scheduled Rotation</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="action-buttons">
+                                            <button type="submit" class="btn btn-primary">Add/Update Tyre</button>
+                                            <button type="button" id="move-tyre-btn" class="btn btn-warning">Move This Tyre</button>
+                                            <button type="button" id="clear-form-btn" class="btn btn-secondary">Clear Form</button>
+                                        </div>
+                                    </form>
+                                    
+                                    <div class="tyre-actions">
+                                        <h6>Quick Actions</h6>
+                                        <div class="d-grid gap-2">
+                                            <button type="button" id="clear-position-btn" class="btn btn-outline-danger">Clear Selected Position</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize data structure with default values
+            function initializeTyreData() {
+                const defaultTyreData = {
+                    APOQ2057: {
+                        1: { number: "V048252025", brand: "Michelin", kmr: 25400, hmr: 1850 },
+                        2: { number: "V050481425", brand: "Bridgestone", kmr: 18700, hmr: 1240 },
+                        3: { number: "D034890125", brand: "Goodyear", kmr: 32100, hmr: 2150 },
+                        4: { number: "D004700125", brand: "Apollo", kmr: 15200, hmr: 980 },
+                        5: { number: "V083972625", brand: "CEAT", kmr: 28500, hmr: 1920 },
+                        6: { number: "V065162625", brand: "MRF", kmr: 22100, hmr: 1520 },
+                        7: { number: "V063720825", brand: "JK Tyre", kmr: 19800, hmr: 1350 },
+                        8: { number: "D031140725", brand: "Bridgestone", kmr: 31400, hmr: 2080 },
+                        9: { number: "V053800825", brand: "Michelin", kmr: 26700, hmr: 1780 },
+                        10: { number: "V053750825", brand: "Goodyear", kmr: 23900, hmr: 1640 }
+                    },
+                    APOQ2058: {
+                        1: { number: "D022671725", brand: "Bridgestone", kmr: 27400, hmr: 1950 },
+                        2: { number: "T1700871925", brand: "Michelin", kmr: 19700, hmr: 1340 },
+                        3: { number: "V084282625", brand: "Goodyear", kmr: 33100, hmr: 2250 },
+                        4: { number: "V068832625", brand: "Apollo", kmr: 16200, hmr: 1080 },
+                        5: { number: "T2000892025", brand: "CEAT", kmr: 29500, hmr: 2020 },
+                        6: { number: "D014890125", brand: "MRF", kmr: 23100, hmr: 1620 },
+                        7: { number: "V058850825", brand: "JK Tyre", kmr: 20800, hmr: 1450 },
+                        8: { number: "V002902425", brand: "Bridgestone", kmr: 32400, hmr: 2180 },
+                        9: { number: "V002282425", brand: "Michelin", kmr: 27700, hmr: 1880 },
+                        10: { number: "V075202625", brand: "Goodyear", kmr: 24900, hmr: 1740 }
+                    }
+                };
+                
+                // Check if data exists in localStorage, if not initialize with default values
+                if (!localStorage.getItem('tyreData')) {
+                    localStorage.setItem('tyreData', JSON.stringify(defaultTyreData));
+                }
+                
+                return JSON.parse(localStorage.getItem('tyreData'));
+            }
+            
+            // Data structure to store tyre information
+            let tyreData = initializeTyreData();
+            let currentTipper = "APOQ2057";
+            let selectedPosition = null;
+            let targetPosition = null;
+            
+            // Tipper selection
+            const tipperButtons = document.querySelectorAll('[data-tipper]');
+            tipperButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    tipperButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentTipper = this.getAttribute('data-tipper');
+                    loadTipperData();
+                });
+            });
+            
+            // Load tipper data
+            function loadTipperData() {
+                for (let i = 1; i <= 10; i++) {
+                    const positionElement = document.getElementById(`position-${i}-number`);
+                    const positionCircle = document.querySelector(`[data-position="${i}"]`);
+                    
+                    // Ensure the position exists in our data structure
+                    if (!tyreData[currentTipper][i]) {
+                        tyreData[currentTipper][i] = { number: "", brand: "", kmr: 0, hmr: 0 };
+                    }
+                    
+                    if (positionElement && positionCircle) {
+                        positionElement.textContent = tyreData[currentTipper][i].number;
+                        
+                        // Update visual style based on whether position has a tyre
+                        if (tyreData[currentTipper][i].number) {
+                            positionCircle.classList.remove('empty');
+                        } else {
+                            positionCircle.classList.add('empty');
+                        }
+                    }
+                }
+                
+                // Save updated data to localStorage
+                localStorage.setItem('tyreData', JSON.stringify(tyreData));
+                
+                // Clear any selection
+                clearSelection();
+            }
+            
+            // Tyre position selection
+            const tyrePositions = document.querySelectorAll('.tyre-position');
+            tyrePositions.forEach(position => {
+                position.addEventListener('click', function() {
+                    const positionNum = this.getAttribute('data-position');
+                    selectPosition(positionNum);
+                });
+            });
+            
+            // Select a position
+            function selectPosition(positionNum) {
+                // Clear previous selection
+                clearSelection();
+                
+                // Set new selection
+                const selectedElement = document.querySelector(`[data-position="${positionNum}"]`);
+                selectedElement.classList.add('selected');
+                
+                selectedPosition = positionNum;
+                
+                // Load tyre details
+                if (tyreData[currentTipper] && tyreData[currentTipper][positionNum] && tyreData[currentTipper][positionNum].number) {
+                    const tyre = tyreData[currentTipper][positionNum];
+                    document.getElementById('tyreNumber').value = tyre.number || '';
+                    document.getElementById('tyreBrand').value = tyre.brand || '';
+                    document.getElementById('subBrand').value = '';
+                    document.getElementById('initialKMR').value = tyre.kmr || '';
+                    document.getElementById('initialHMR').value = tyre.hmr || '';
+                    document.getElementById('dateIssued').value = '';
+                    document.getElementById('reason').value = '';
+                } else {
+                    // Clear form if position is empty
+                    document.getElementById('tyreNumber').value = '';
+                    document.getElementById('tyreBrand').value = '';
+                    document.getElementById('subBrand').value = '';
+                    document.getElementById('initialKMR').value = '';
+                    document.getElementById('initialHMR').value = '';
+                    document.getElementById('dateIssued').value = '';
+                    document.getElementById('reason').value = '';
+                }
+            }
+            
+            // Clear selection
+            function clearSelection() {
+                tyrePositions.forEach(p => p.classList.remove('selected'));
+                selectedPosition = null;
+                targetPosition = null;
+                document.getElementById('move-controls').style.display = 'none';
+            }
+            
+            // Move tyre button
+            document.getElementById('move-tyre-btn').addEventListener('click', function() {
+                if (!selectedPosition) {
+                    alert('Please select a tyre position first');
+                    return;
+                }
+                
+                const tyreNumber = document.getElementById('tyreNumber').value;
+                if (!tyreNumber) {
+                    alert('No tyre information available to move');
+                    return;
+                }
+                
+                document.getElementById('selected-tyre-number').textContent = tyreNumber;
+                document.getElementById('selected-position').textContent = selectedPosition;
+                
+                // Show available positions to move to (all positions except the current one)
+                const targetPositionsContainer = document.getElementById('target-positions');
+                targetPositionsContainer.innerHTML = '';
+                
+                for (let i = 1; i <= 10; i++) {
+                    if (i != selectedPosition) {
+                        const positionOption = document.createElement('div');
+                        positionOption.className = 'position-option';
+                        positionOption.textContent = `Position ${i}`;
+                        positionOption.setAttribute('data-target', i);
+                        
+                        // Show the tyre number at the target position if it exists
+                        if (tyreData[currentTipper][i] && tyreData[currentTipper][i].number) {
+                            positionOption.textContent += ` (${tyreData[currentTipper][i].number})`;
+                        } else {
+                            positionOption.textContent += ' (Empty)';
+                        }
+                        
+                        positionOption.addEventListener('click', function() {
+                            // Remove any previous selection
+                            document.querySelectorAll('.position-option').forEach(opt => {
+                                opt.style.backgroundColor = '#e9ecef';
+                                opt.style.color = '';
+                            });
+                            
+                            // Highlight selected option
+                            this.style.backgroundColor = '#3498db';
+                            this.style.color = 'white';
+                            
+                            targetPosition = this.getAttribute('data-target');
+                        });
+                        
+                        targetPositionsContainer.appendChild(positionOption);
+                    }
+                }
+                
+                document.getElementById('move-controls').style.display = 'block';
+                targetPosition = null;
+            });
+            
+            // Confirm move button
+            document.getElementById('confirm-move').addEventListener('click', function() {
+                if (!targetPosition) {
+                    alert('Please select a target position first');
+                    return;
+                }
+                
+                moveTyre(selectedPosition, targetPosition);
+            });
+            
+            // Cancel move
+            document.getElementById('cancel-move').addEventListener('click', function() {
+                clearSelection();
+            });
+            
+            // Move tyre function
+            function moveTyre(fromPosition, toPosition) {
+                // Get the tyre data
+                const fromTyre = {...tyreData[currentTipper][fromPosition]};
+                const toTyre = {...tyreData[currentTipper][toPosition]};
+                
+                // Swap the tyres
+                tyreData[currentTipper][fromPosition] = toTyre;
+                tyreData[currentTipper][toPosition] = fromTyre;
+                
+                // Save to localStorage
+                localStorage.setItem('tyreData', JSON.stringify(tyreData));
+                
+                // Update the UI
+                document.getElementById(`position-${fromPosition}-number`).textContent = toTyre.number || '';
+                document.getElementById(`position-${toPosition}-number`).textContent = fromTyre.number || '';
+                
+                // Update position styles
+                document.querySelector(`[data-position="${fromPosition}"]`).classList.toggle('empty', !toTyre.number);
+                document.querySelector(`[data-position="${toPosition}"]`).classList.toggle('empty', !fromTyre.number);
+                
+                // Reset the form and selection
+                document.getElementById('tyre-form').reset();
+                clearSelection();
+                
+                if (fromTyre.number) {
+                    alert(`Tyre ${fromTyre.number} moved from position ${fromPosition} to position ${toPosition}`);
+                }
+            }
+            
+            // Form submission - Add new tyre
+            const tyreForm = document.getElementById('tyre-form');
+            tyreForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!selectedPosition) {
+                    alert('Please select a position first');
+                    return;
+                }
+                
+                const tyreNumber = document.getElementById('tyreNumber').value;
+                const brand = document.getElementById('tyreBrand').value;
+                const kmr = parseInt(document.getElementById('initialKMR').value) || 0;
+                const hmr = parseInt(document.getElementById('initialHMR').value) || 0;
+                
+                if (!tyreNumber) {
+                    alert('Please enter a tyre number');
+                    return;
+                }
+                
+                // Update the data model
+                if (!tyreData[currentTipper]) {
+                    tyreData[currentTipper] = {};
+                }
+                
+                tyreData[currentTipper][selectedPosition] = {
+                    number: tyreNumber,
+                    brand: brand,
+                    kmr: kmr,
+                    hmr: hmr
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('tyreData', JSON.stringify(tyreData));
+                
+                // Update the UI
+                document.getElementById(`position-${selectedPosition}-number`).textContent = tyreNumber;
+                document.querySelector(`[data-position="${selectedPosition}"]`).classList.remove('empty');
+                
+                alert('Tyre details saved successfully!');
+            });
+            
+            // Clear form button
+            document.getElementById('clear-form-btn').addEventListener('click', function() {
+                document.getElementById('tyre-form').reset();
+            });
+            
+            // Clear position button
+            document.getElementById('clear-position-btn').addEventListener('click', function() {
+                if (!selectedPosition) {
+                    alert('Please select a position first');
+                    return;
+                }
+                
+                if (confirm('Are you sure you want to clear this position?')) {
+                    // Clear the data model
+                    if (tyreData[currentTipper] && tyreData[currentTipper][selectedPosition]) {
+                        tyreData[currentTipper][selectedPosition] = { number: "", brand: "", kmr: 0, hmr: 0 };
+                        
+                        // Save to localStorage
+                        localStorage.setItem('tyreData', JSON.stringify(tyreData));
+                        
+                        // Update the UI
+                        document.getElementById(`position-${selectedPosition}-number`).textContent = "";
+                        document.querySelector(`[data-position="${selectedPosition}"]`).classList.add('empty');
+                        
+                        // Clear the form
+                        document.getElementById('tyre-form').reset();
+                        
+                        alert('Position cleared successfully!');
+                    }
+                }
+            });
+            
+            // Initialize with first tipper data
+            loadTipperData();
+        });
+    </script>
+</body>
+</html>
